@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChristUniveristy</title>
+</head>
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .navbar {
+        /* border: 2px solid red; */
+        text-align: center;
+        color: white;
+        background-color: #5a4ff6;
+        padding: 2px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        width: 1250px;
+        height: 100%;
+        border: 2px solid black;
+        padding: 33px 13px;
+        background: black;
+        padding-left: 15px;
+    }
+
+    .formitem {
+        margin: 5px 12px;
+        padding: 5px 5px;
+        width: 400px;
+        height: 25px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .container2 {
+        padding-left: 100px;
+        color: white;
+        background: #c92fc9;
+        width: 50%;
+    }
+
+    .container1 {
+        background: wheat;
+        /* padding-right: 100px; */
+        width: 50%;
+    }
+
+    .formerror {
+        color: red;
+    }
+</style>
+
+<body>
+    <nav class="navbar">
+        <h1>Student's Feedback Form</h1>
+        <p>Department of Computer Science Christ Deemed to be Univeristy</p>
+    </nav>
+    <div class="container">
+        <div class="container1">
+            <h2 style="text-align: center;margin-top: 53px;">Please fill the details below:</h2>
+            <form action="/myaction.php" name="myForm" onsubmit="return validateForm()" method="post">
+                <div id="name">
+                    <input type="text" onkeypress="return  lockkb(event)" name="fname" placeholder="Enter Your Name"
+                        class="formitem" required>
+                    <br><b><span class="formerror"></span></b>
+                </div>
+                <div id="email">
+                    <input type="Email" name="femail" placeholder="Enter Your Email" class="formitem" required>
+                    <br><b><span class="formerror"></span></b>
+                </div>
+                <div id="phone">
+                    <input type="number" name="fphone" placeholder="Enter Your Phone number" class="formitem" required>
+                    <br><b><span class="formerror"></span></b>
+                </div>
+                <div id="address">
+                    <input type="text" name="faddress" placeholder="Enter Your Address" class="formitem" required>
+                    <br><b><span class="formerror"></span></b>
+                </div>
+
+                <div id="password">
+                    <input name="fpassword" type="password" placeholder="Enter Your Password" class="formitem" required>
+                    <br><b><span class="formerror"></span></b>
+                </div>
+                <input type="submit" class="formitem" style="background: green;color: white;" value="Submit">
+            </form>
+            <button style="background: rgb(226, 147, 43); color: white;" onClick="window.location.reload();"
+                class="formitem">Reset</button>
+        </div>
+
+        <div class="container2">
+            <p>
+            <h3 class="headcenter">What you like the most in the Campus? </h3>
+            <li><input name="camp" type="checkbox">Student</input></li>
+            <li><input name="camp" type="checkbox">Location</input></li>
+            <li><input name="camp" type="checkbox">Campus</input></li>
+            <li><input name="camp" type="checkbox">Atmosphere</input></li>
+            <li><input name="camp" type="checkbox">Dorm rooms</input></li>
+            <li><input name="camp" type="checkbox">Sports</input></li>
+            </p>
+            <p>
+            <h3 class="headcenter">How you became interested in the University? </h3>
+            <li><input name="uni" type="radio">Friends</input></li>
+            <li><input name="uni" type="radio">Television</input></li>
+            <li><input name="uni" type="radio">News Paper</input></li>
+            <li><input name="uni" type="radio">Internet</input></li>
+            <li><input name="uni" type="radio">Others</input></li>
+            </p>
+            <p>
+            <h3 class="headcenter">Any other comments?</h3>
+            <div>
+                <textarea name="comments" type="text"></textarea>
+            </div>
+            </p>
+        </div>
+    </div>
+    <script>
+        function clearErrors() {
+            errors = document.getElementsByClassName('formerror');
+            for (let item of errors) {
+                item.innerHTML = "";
+            }
+        }
+        function seterror(id, error) {
+            element = document.getElementById(id);
+            element.getElementsByClassName('formerror')[0].innerHTML = error;
+        }
+        function validateForm() {
+            var returnVal = true;
+            clearErrors();
+
+            var name = document.forms['myForm']['fname'].value;
+            if (name.length < 5) {
+                seterror("name", "*Length of name is too short");
+                returnVal = false;
+            }
+
+            var email = document.forms['myForm']['femail'].value;
+            if (email.length > 30) {
+                seterror("email", "*Length of email is too long");
+                returnVal = false;
+            }
+            if (email.search(/([a-z0-9\.\-_]{5,25})@christuniversity.in$/) < 0) {
+                seterror("email", "*Domain name should only be christuniversity.in");
+                returnVal = false;
+            }
+            var phone = document.forms['myForm']['fphone'].value;
+            if (phone.length != 10) {
+                seterror("phone", "*Length of phone should be 10");
+                returnVal = false;
+            }
+
+            var password = document.forms['myForm']['fpassword'].value;
+            if (password.length < 8) {
+                seterror("password", "*Your password must be at least 8 characters");
+                returnVal = false;
+            }
+            if (password.search(/[a-z]/) < 0) {
+                seterror("password", "*Your password must contain at least one letter in lower case.");
+                returnVal = false;
+            }
+            if (password.search(/[A-Z]/) < 0) {
+                seterror("password", "*Your password must contain at least one letter in upper case.");
+                returnVal = false;
+            }
+            if (password.search(/[0-9]/) < 0) {
+                seterror("password", "*Your password must contain at least one digit.");
+                returnVal = false;
+            }
+            if (password.search(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/) < 0) {
+                seterror("password", "*Your password must contain at least one Special Character.");
+                returnVal = false;
+            }
+
+            return returnVal;
+        }
+        function lockkb(event) {
+            let code = event.which;
+            if (code > 47 && code < 58)
+                return false;
+            else
+                return true;
+        }
+    </script>
+</body>
+
+</html>
